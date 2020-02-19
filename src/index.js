@@ -9,6 +9,7 @@ app.get('/price/:ticker', (req, res) => {
   const price = dataCache[ticker];
   if (!price) {
     res.status(404).send('Ticker not found');
+    return;
   }
   res.json(price);
 });

@@ -1,6 +1,6 @@
 const { stdout } = require('process');
 
-const rnd = (multiplier) => (multiplier ? Math.random() * multiplier : Math.random());
+const rnd = (multiplier = 1) => Math.random() * multiplier;
 
 const randomPrice = () => rnd() * rnd() * rnd(100);
 const tickPrice = (price) => price + ((price / 100) * rnd() * (rnd() > 0.5 ? 1 : -1));
@@ -53,7 +53,8 @@ const cache = symbols.reduce((acc, cur) => {
 }, {});
 
 const tick = () => {
-  if (rnd() < 0.5) {
+  const number = rnd();
+  if (number < 0.5) {
     setTimeout(tick, rnd(50));
     return;
   }
@@ -61,7 +62,6 @@ const tick = () => {
   const pos = Math.floor(rnd() * symbols.length);
   const cachedItem = cache[symbols[pos]];
 
-  const number = rnd();
   if (number >= 0.5 && number < 0.75) {
     cachedItem.bid = tickPrice(cachedItem.bid);
   } else {
