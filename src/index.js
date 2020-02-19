@@ -19,6 +19,16 @@ app.get('/price/:ticker', (req, res) => {
   res.json(price);
 });
 
+app.get('/prices/:tickers', (req, res) => {
+  const { tickers } = req.params;
+  const prices = tickers.map((ticker) => dataCache[ticker] || {});
+  if (prices.length === 0) {
+    res.status(404).send('Ticker not found');
+    return;
+  }
+  res.json(prices);
+});
+
 app.get('/static/tickers', (req, res) => {
   res.json(Object.keys(dataCache));
 });
