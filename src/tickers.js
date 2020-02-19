@@ -68,7 +68,7 @@ const tick = () => {
     cachedItem.ask = tickPrice(cachedItem.ask);
   }
   cachedItem.lastVol = Math.round(rnd(100000)) * 1000;
-  stdout.write('.');
+  //stdout.write('.');
 
   setTimeout(tick, rnd(50));
 };

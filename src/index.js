@@ -1,8 +1,13 @@
+const { env } = require('process');
 const express = require('express');
+const cors = require('cors');
+
 const dataCache = require('./tickers');
 
 const app = express();
-const port = 3000;
+app.use(cors());
+
+const port = env.PORT || 3000;
 
 app.get('/price/:ticker', (req, res) => {
   const { ticker } = req.params;
