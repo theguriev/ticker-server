@@ -21,7 +21,10 @@ app.get('/price/:ticker', (req, res) => {
 
 app.get('/prices/:tickers', (req, res) => {
   const { tickers } = req.params;
-  const prices = tickers.split(',').map((ticker) => dataCache[ticker] || {});
+  const prices = tickers.split(',').map((ticker) => ({
+    symbol: ticker,
+    ...(dataCache[ticker] || { error: 'Ticker not found' }),
+  }));
   if (prices.length === 0) {
     res.status(404).send('Ticker not found');
     return;
