@@ -16,7 +16,7 @@ app.get('/price/:ticker', (req, res) => {
     res.status(404).send('Ticker not found');
     return;
   }
-  res.json(price);
+  res.json({ symbol: ticker, ...price });
 });
 
 app.get('/prices/:tickers', (req, res) => {
