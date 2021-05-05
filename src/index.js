@@ -32,6 +32,19 @@ app.get('/prices/:tickers', (req, res) => {
   res.json(prices);
 });
 
+app.get('/fake-hit/:tickers', (req, res) => {
+  const { tickers } = req.params;
+  const { percentage = 0.75 } = req.query;
+  tickers.split(',').forEach((ticker) => {
+    const c = dataCache[ticker];
+    c.bid *= percentage;
+    c.ask *= percentage;
+  });
+  res.json({
+    ok: true,
+  });
+});
+
 app.get('/static/tickers', (req, res) => {
   res.json(Object.keys(dataCache));
 });

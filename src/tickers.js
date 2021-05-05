@@ -46,11 +46,14 @@ const cache = symbols.reduce((acc, cur) => {
   const price = randomPrice();
   acc[cur] = {
     bid: price,
-    ask: price + 1,
+    ask: price * 1.01,
     lastVol: 0,
+    open: price,
   };
   return acc;
 }, {});
+
+let ticked = 0;
 
 const tick = () => {
   const number = rnd();
@@ -67,8 +70,13 @@ const tick = () => {
   } else {
     cachedItem.ask = tickPrice(cachedItem.ask);
   }
-  cachedItem.lastVol = Math.round(rnd(100000)) * 1000;
-  //stdout.write('.');
+  cachedItem.lastVol = Math.round(rnd(1000)) * 1000;
+
+  // eslint-disable-next-line no-plusplus
+  ticked++;
+  if (ticked % 100 === 0) {
+    stdout.write(`${String(ticked)},`);
+  }
 
   setTimeout(tick, rnd(50));
 };
